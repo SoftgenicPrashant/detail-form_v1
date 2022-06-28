@@ -7,7 +7,7 @@ import "../css/info.css";
 import "../css/tickets.css";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import data from "../assets/NASPO DATA.json";
-
+import axios from "axios";
 const initialFormData = {
   
   region: "",
@@ -454,8 +454,18 @@ const Form = () => {
     console.log(check6);
   };
 
-  const submitTheForm = (e) => {
+  const submitTheForm = async (e) => {
     console.warn(formData);
+    
+    let data = JSON.stringify({fname: "sample_value", region:"india",ticket1:true,ticket2:true,ticket3:true,ticket4:true,ticket5:true,ticket6:true,})
+   
+   await axios.post('https://agile-cove-11802.herokuapp.com/naspo', data)
+    .then(response => {
+      
+        console.log('succes')
+    })
+    console.log(data)
+
     handleSubmit(e);
   };
   //   decides the page to display based on the page state value
