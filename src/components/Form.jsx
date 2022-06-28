@@ -1,6 +1,6 @@
 import React from "react";
 import "../css/form.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Modal from "./Modal";
 import banner from "../images/banner.png";
 import "../css/info.css";
@@ -8,6 +8,7 @@ import "../css/tickets.css";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import data from "../assets/NASPO DATA.json";
 import axios from "axios";
+
 const initialFormData = {
   
   region: "",
@@ -18,6 +19,19 @@ const initialFormData = {
 const personData = data.people;
 
 const Form = () => {
+  const [data, setdata] = useState([]);
+  useEffect(() => {
+  
+    const fetchPosts = async () =>{
+      const res = await axios.get("https://agile-cove-11802.herokuapp.com/naspo");
+      setdata(res.data)
+      
+    }
+    fetchPosts();
+  },[]);
+  console.log(data)
+  
+
   // separate states for changing css
   const [round1, setRound1] = useState("no-round");
   const [round2, setRound2] = useState("no-round");
@@ -454,18 +468,9 @@ const Form = () => {
     console.log(check6);
   };
 
-  const submitTheForm = async (e) => {
+  const submitTheForm = (e) => {
     console.warn(formData);
     
-    let data = JSON.stringify({fname: "sample_value", region:"india",ticket1:true,ticket2:true,ticket3:true,ticket4:true,ticket5:true,ticket6:true,})
-   
-   await axios.post('https://agile-cove-11802.herokuapp.com/naspo', data)
-    .then(response => {
-      
-        console.log('succes')
-    })
-    console.log(data)
-
     handleSubmit(e);
   };
   //   decides the page to display based on the page state value
