@@ -11,32 +11,26 @@ const Modal = (props) => {
     return null;
   } else {
     return (
-      <div className="modal-container" style={{
-        backgroundColor:"#fff"
-      }}>
+      <div className="modal-container">
         <h2>Form submitted succesfully</h2>
-        <p className="modal-name"><span>NAME :&nbsp;</span> { props.fname}</p>
-        <p className="modal-region"><span>REGION :&nbsp;</span>{ props.formData.region}</p>
-      
-<div className="card-container">
-{props.formData.tickets.map((ticket, index) => {
+        {/* <p className="modal-name">{"Name: " + props.formData.name}</p> */}
+        <p className="modal-region">{"Region: " + props.formData.region}</p>
+        {props.formData.tickets.map((ticket, index) => {
           return (
-  <div className="card">
-  <h1 className="title">{ticket.name}<span className="border"></span></h1>
-  <div className="card-two">
-    <div className="box">
-      <div className="box__text">
-        <p className="box__desc">{ticket.value}</p>
-      </div>
-    </div>
-  </div>
-</div>
-   );
-  })}
-</div>
+            <div className="ticket-card" key={index}>
+              <div className="top">
+                <p>{ticket.name}</p>
+              </div>
+              <div className="middle">
+                <p>{ticket.value}</p>
+              </div>
+            </div>
+          );
+        })}
+
         <div>{props.children}</div>
         <button
-          style={{ maxWidth: "150px", color: "white",backgroundColor:"red" }}
+          style={{ maxWidth: "150px", color: "white" }}
           className="toggle-button"
           onClick={onClose}
         >
