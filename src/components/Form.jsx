@@ -37,7 +37,7 @@ const Form = () => {
   //   other states
   const [people, setPeople] = useState([]);
   const [page, setPage] = useState(0);
-  const [fname, setfname] = useState("nnnn");
+  const [fname, setfname] = useState("");
   const [formData, setFormData] = useState(initialFormData);
   const [show, setShow] = useState(false);
 
