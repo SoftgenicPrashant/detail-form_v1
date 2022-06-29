@@ -1,21 +1,22 @@
-import React from "react";
-import "../css/form.css";
-import { useState,useEffect } from "react";
+import React, { useState } from "react";
+import { FaMapMarkerAlt } from "react-icons/fa";
+import { ToastContainer, toast } from "react-toastify";
 import Modal from "./Modal";
 import banner from "../images/banner.png";
 import "../css/info.css";
 import "../css/tickets.css";
-import { FaMapMarkerAlt } from "react-icons/fa";
-// import data from "../assets/NASPO DATA.json";
-import axios from "axios";
+import "../css/form.css";
+import "react-toastify/dist/ReactToastify.css";
+import data from "../assets/NASPO DATA.json";
 
 const initialFormData = {
+  name: "",
   region: "",
   tickets: [],
   points: 0,
 };
 
-// let personData;
+const personData = data.people;
 
 const Form = () => {
   // separate states for changing css
@@ -35,73 +36,65 @@ const Form = () => {
   const [check6, setCheck6] = useState(false);
 
   //   other states
-  const [people, setPeople] = useState([]);
+  const [people, setPeople] = useState(personData);
   const [page, setPage] = useState(0);
-  const [fname, setfname] = useState("nnnn");
   const [formData, setFormData] = useState(initialFormData);
   const [show, setShow] = useState(false);
 
-  useEffect(()=>{
-    axios.get("https://agile-cove-11802.herokuapp.com/naspo").then(res=>{
-        const dat = res.data;
-        console.log(dat);
-        setPeople(dat);
-    });
-  },[]);
+  console.log(setPeople);
 
-  // console.log(setPeople);
   //   notification function
+  const notify = (data) => {
+    toast(data);
+  };
   //   handles point count
-
   const handleCount = (e) => {
-    // console.log(e.target);
+    console.log(e.target);
     if (e.target.checked === false) {
       setFormData({
         ...formData,
         points: formData.points - 1,
       });
-      // console.log(formData);
+      console.log(formData);
     } else if (e.target.checked === true) {
       setFormData({
         ...formData,
         points: formData.points + 1,
       });
-      //   // console.log(formData);
+      console.log(formData);
     }
   };
   //   shows the modal using the show state for that modal
   const showModal = () => {
     setShow(!show);
   };
-
   //   responsible for handling change in the page
   const changePage = (e) => {
     e.preventDefault();
     if (formData.region === "") {
-      alert("Please enter a valid region");
+      notify("Please enter a valid region");
     } else {
       setPage(1);
     }
   };
-
   //   handles submit for the final form
   const handleSubmit = (e) => {
     e.preventDefault();
     if (formData.points >= 0) {
       setShow(true);
     } else {
-      alert("Please select atleast one ticket");
+      notify("Please select atleast one ticket");
     }
   };
 
-
-
   //   HANDLES NAME CHANGE
   const handleNameChange = (e) => {
-    // // console.log(e.target.value);
-    setfname(e.target.fname);
-    setfname(e.target.value);
-    // console.log(e);
+    console.log(e.target.value);
+    setFormData({
+      ...formData,
+      name: e.target.value,
+    });
+    console.log(e);
     var newData = {};
     var newArray;
     newArray = people.map((person) => {
@@ -128,21 +121,22 @@ const Form = () => {
     });
   };
 
+  //   CHANGES THE REGION
   const handleRegionChange = (data) => {
     setFormData({
       ...formData,
       region: data,
     });
-    // console.log(formData);
+    console.log(formData);
   };
 
   const handleNameKeyDown = (e) => {
-    // console.log(e);
-    // // console.log(e.target);
+    console.log(e);
+    console.log(e.target);
   };
 
   const onCheck1 = (e) => {
-    // console.log(e);
+    console.log(e);
     var top =
       e.target.parentElement.parentElement.parentElement.parentElement
         .children[0];
@@ -159,7 +153,7 @@ const Form = () => {
 
     if (bottom.children[0].children) {
       for (const item of bottom.children[0].children) {
-        // // console.log(item);
+        console.log(item);
         listItems.push(item.innerText);
       }
     }
@@ -179,7 +173,7 @@ const Form = () => {
         ...formData,
         tickets: tickets,
       });
-      // console.log(formData);
+      console.log(formData);
     } else {
       tickets.push(ticket);
       setFormData({
@@ -195,7 +189,7 @@ const Form = () => {
       ...formData,
       ticket1: e.target.value,
     });
-    // // console.log(check1);
+    console.log(check1);
   };
   const onCheck2 = (e) => {
     var top =
@@ -214,7 +208,7 @@ const Form = () => {
 
     if (bottom !== undefined) {
       for (const item of bottom.children[0].children) {
-        // // console.log(item);
+        console.log(item);
         listItems.push(item.innerText);
       }
     }
@@ -234,7 +228,7 @@ const Form = () => {
         ...formData,
         tickets: tickets,
       });
-      //   // console.log(formData);
+      console.log(formData);
     } else {
       tickets.push(ticket);
       setFormData({
@@ -246,7 +240,7 @@ const Form = () => {
     setCheck2(e.target.checked);
     round2 === "no-round" ? setRound2("round") : setRound2("no-round");
     handleCount(e);
-    // // console.log(check2);
+    console.log(check2);
   };
   const onCheck3 = (e) => {
     var top =
@@ -265,7 +259,7 @@ const Form = () => {
 
     if (bottom !== undefined) {
       for (const item of bottom.children[0].children) {
-        // console.log(item);
+        console.log(item);
         listItems.push(item.innerText);
       }
     }
@@ -285,7 +279,7 @@ const Form = () => {
         ...formData,
         tickets: tickets,
       });
-      // console.log(formData);
+      console.log(formData);
     } else {
       tickets.push(ticket);
       setFormData({
@@ -295,10 +289,10 @@ const Form = () => {
     }
 
     setCheck3(e.target.checked);
-    // console.log(round3);
+    console.log(round3);
     round3 === "no-round" ? setRound3("round") : setRound3("no-round");
     handleCount(e);
-    // console.log(check3);
+    console.log(check3);
   };
   const onCheck4 = (e) => {
     var top =
@@ -317,7 +311,7 @@ const Form = () => {
 
     if (bottom !== undefined) {
       for (const item of bottom.children[0].children) {
-        // console.log(item);
+        console.log(item);
         listItems.push(item.innerText);
       }
     }
@@ -337,7 +331,7 @@ const Form = () => {
         ...formData,
         tickets: tickets,
       });
-      // console.log(formData);
+      console.log(formData);
     } else {
       tickets.push(ticket);
       setFormData({
@@ -349,7 +343,7 @@ const Form = () => {
     setCheck4(e.target.checked);
     round4 === "no-round" ? setRound4("round") : setRound4("no-round");
     handleCount(e);
-    // console.log(check4);
+    console.log(check4);
   };
   const onCheck5 = (e) => {
     var top =
@@ -368,7 +362,7 @@ const Form = () => {
 
     if (bottom !== undefined) {
       for (const item of bottom.children[0].children) {
-        // console.log(item);
+        console.log(item);
         listItems.push(item.innerText);
       }
     }
@@ -388,7 +382,7 @@ const Form = () => {
         ...formData,
         tickets: tickets,
       });
-      // console.log(formData);
+      console.log(formData);
     } else {
       tickets.push(ticket);
       setFormData({
@@ -400,7 +394,7 @@ const Form = () => {
     setCheck5(e.target.checked);
     round5 === "no-round" ? setRound5("round") : setRound5("no-round");
     handleCount(e);
-    // console.log(check5);
+    console.log(check5);
   };
   const onCheck6 = (e) => {
     var top =
@@ -419,7 +413,7 @@ const Form = () => {
 
     if (bottom !== undefined) {
       for (const item of bottom.children[0].children) {
-        // console.log(item);
+        console.log(item);
         listItems.push(item.innerText);
       }
     }
@@ -439,7 +433,7 @@ const Form = () => {
         ...formData,
         tickets: tickets,
       });
-      // console.log(formData);
+      console.log(formData);
     } else {
       tickets.push(ticket);
       setFormData({
@@ -451,18 +445,11 @@ const Form = () => {
     setCheck6(e.target.checked);
     round6 === "no-round" ? setRound6("round") : setRound6("no-round");
     handleCount(e);
-    // console.log(check6);
+    console.log(check6);
   };
-  const submitTheForm = (e) => {
-    let data = {"data":[fname,formData.region,check1,check2,check3,check4,check5,check6]};
-   console.log(data);
-   axios.post('https://agile-cove-11802.herokuapp.com/naspo', data)
-    .then(response => {
-        console.log(response);
-        console.log('success');
-    })
-    console.log(data)
 
+  const submitTheForm = (e) => {
+    console.warn(formData);
     handleSubmit(e);
   };
   //   decides the page to display based on the page state value
@@ -528,8 +515,8 @@ const Form = () => {
                   <div
                     className={round1}
                     onClick={(e) => {
-                      // console.log(e.target);
-                      // console.log("hello");
+                      console.log(e.target);
+                      console.log("hello");
                     }}
                   >
                     <input
@@ -697,13 +684,19 @@ const Form = () => {
   //   THE RETURN PORTION OF THIS COMPONENT
   return (
     <div className="details-form-container">
-      <div id="form-body">{pageDisplay()}</div>
-      <Modal
-        onClose={showModal}
-        show={show}
-        formData={formData}
-        fname={fname}
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
       />
+      <div id="form-body">{pageDisplay()}</div>
+      <Modal onClose={showModal} show={show} formData={formData} />
     </div>
   );
 };
