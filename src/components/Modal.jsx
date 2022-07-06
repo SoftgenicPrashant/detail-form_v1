@@ -34,7 +34,7 @@ const Modal = (props) => {
             </div>
             <div>{props.children}</div>
             <button
-              style={{ color: "white",backgroundColor:"red" }}
+              style={{ color: "white",backgroundColor:"red", with:"100%" }}
               className="toggle-button"
               onClick={onClose}
             >

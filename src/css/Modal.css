@@ -34,7 +34,7 @@
   margin: 10px 0;
   border: none;
   cursor: pointer;
-  width: 83% !important;
+  width: 100% !important;
   opacity: 1;
   border-radius: 6px;
   font-size: large;
@@ -211,13 +211,11 @@
   }
   .card{
     width: 80%;
-
     padding: 1em;
     margin: 5px;
     display: grid;
     background: #fafafa;
     border-radius: 10px;
-
   }
   .modal-name,
 .modal-region {
