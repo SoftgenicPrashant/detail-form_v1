@@ -2,8 +2,11 @@ import React from "react";
 import "../css/Modal.css";
 import "../css/tickets.css";
 const Modal = (props) => {
+
   const onClose = (e) => {
     props.onClose && props.onClose(e);
+   props.setPage(0);
+   window.location.reload()
   };
   if (!props.show) {
     return null;

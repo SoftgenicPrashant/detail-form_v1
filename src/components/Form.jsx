@@ -499,7 +499,13 @@ const Form = () => {
                   placeholder="Name"
                   onChange={(e)=>{
                     handleNameChange(e.value)
-                  }}
+                    
+                  }
+                  
+                }
+                noOptionsMessage={() => null}
+                isValidNewOption={() => true}
+                formatCreateLabel={() => undefined}
                   //onKeyDown={handleNameKeyDown}
                 />
               </div>
@@ -720,6 +726,7 @@ const Form = () => {
         show={show}
         formData={formData}
         fname={fname}
+        setPage={setPage}
       />
     </div>
   );

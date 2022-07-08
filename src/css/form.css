@@ -7,7 +7,7 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+ 
   height: auto;
 }
 
@@ -20,8 +20,7 @@
   height: max-content;
   max-width: 80vw;
   background-color: var(--foreground-color);
-  text-align: center;
-  align-items: center;
+
   border-radius: 5px;
 }
 
@@ -133,6 +132,10 @@ input:required:invalid {
   border-radius: 10px !important;
   margin-bottom: 10px;
 }
+.css-1s2u09g-control:focus{
+  outline: none !important;
+  box-shadow: none;
+}
 .css-1s2u09g-control
 .css-qc6sy-singleValue {
   margin-left: 5px !important;
@@ -141,6 +144,7 @@ input:required:invalid {
 .css-14el2xx-placeholder {
   margin-left: 5px !important;
   text-align: left;
+  color: black !important;
 }
 .css-tj5bde-Svg {
   display: none !important;
