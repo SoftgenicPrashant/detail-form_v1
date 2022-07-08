@@ -1,6 +1,8 @@
 import React from "react";
 import "../css/form.css";
 import { useState,useEffect } from "react";
+import CreatableSelect from 'react-select/creatable';
+import { ActionMeta, OnChangeValue } from 'react-select';
 import Modal from "./Modal";
 import banner from "../images/banner.png";
 import "../css/info.css";
@@ -8,7 +10,7 @@ import "../css/tickets.css";
 import { FaMapMarkerAlt } from "react-icons/fa";
 // import data from "../assets/NASPO DATA.json";
 import axios from "axios";
-import InputAuto from "./AutoSuggestion";
+
 const initialFormData = {
   region: "",
   tickets: [],
@@ -40,6 +42,7 @@ const Form = () => {
   const [fname, setfname] = useState("");
   const [formData, setFormData] = useState(initialFormData);
   const [show, setShow] = useState(false);
+  const [options,setOptions] = useState([])
 
   useEffect(()=>{
     axios.get("http://localhost:7632/naspo").then(res=>{
@@ -48,13 +51,19 @@ const Form = () => {
         setPeople(dat);
     });
   },[]);
-  const getSelectedVal = value => {
-    console.log(value);
-  };
 
-  const getChanges = value => {
-    console.log(value);
-  };
+  
+  useEffect(()=>{
+    let arrOptions = people.map((person) => {
+      let fullname = person["Full Name"].toLowerCase();
+
+      return {
+        value: fullname,
+        label: fullname,
+      };
+    });
+    setOptions(arrOptions);
+},[people]);
 
   // console.log(setPeople);
   //   notification function
@@ -104,10 +113,10 @@ const Form = () => {
 
 
   //   HANDLES NAME CHANGE
-  const handleNameChange = (e) => {
-    // // console.log(e.target.value);
-    setfname(e.target.fname);
-    setfname(e.target.value);
+  const handleNameChange = (value) => {
+      // console.log(e.target.value);
+    // setfname(e.target.fname);
+    setfname(value);
     // console.log(e);
     var newData = {};
     var newArray;
@@ -124,12 +133,12 @@ const Form = () => {
     console.log(newData["people"]);
     console.log(newData);
     newData.people.forEach((person) => {
-      if (person.fullname === e.target.value.toLowerCase()) {
-        console.log(
-          e.target.parentElement.parentElement.children[1].children[0]
-        );
-        e.target.parentElement.parentElement.children[1].children[0].value =
-          person.region;
+      if (person.fullname === value.toLowerCase()) {
+        // console.log(
+        //   e.target.parentElement.parentElement.children[1].children[0]
+        // );
+        // e.target.parentElement.parentElement.children[1].children[0].value =
+        //   person.region;
         handleRegionChange(person.region);
       }
     });
@@ -483,16 +492,15 @@ const Form = () => {
           <div className="info-container">
             <form className="info-form">
               <div className="form-group">
-                <input
-                  type="text"
+                <CreatableSelect
+                  options={options}
                   name="name"
                   id="name"
-                  data={people}
-                  onSelected={getSelectedVal}
                   placeholder="Name"
-                  className="info-input"
-                  onChange={handleNameChange}
-                  onKeyDown={handleNameKeyDown}
+                  onChange={(e)=>{
+                    handleNameChange(e.value)
+                  }}
+                  //onKeyDown={handleNameKeyDown}
                 />
               </div>
 
